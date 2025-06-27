@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useFormState } from 'react-dom';
+import { useState, useEffect, useActionState } from 'react';
 import { SidebarProvider, Sidebar, SidebarInset } from '@/components/ui/sidebar';
 import { HistorySidebar } from '@/components/HistorySidebar';
 import { PromptForm } from '@/components/PromptForm';
@@ -16,7 +15,7 @@ const initialState: FormState = {
 };
 
 export default function Home() {
-  const [state, formAction] = useFormState(generateContentAction, initialState);
+  const [state, formAction] = useActionState(generateContentAction, initialState);
   const { toast } = useToast();
 
   const [prompt, setPrompt] = useState('');
