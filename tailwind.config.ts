@@ -88,10 +88,20 @@ export default {
             height: '0',
           },
         },
+        'jiggle': {
+          '0%, 100%': { transform: 'rotate(-1deg)' },
+          '50%': { transform: 'rotate(1deg)' },
+        },
+        'bubble': {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.05)' },
+        }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'jiggle': 'jiggle 0.4s ease-in-out infinite',
+        'bubble': 'bubble 0.3s ease-out'
       },
     },
   },

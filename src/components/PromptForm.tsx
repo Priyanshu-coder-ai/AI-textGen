@@ -1,7 +1,7 @@
 'use client';
 
 import { useFormStatus } from 'react-dom';
-import { Wand2, LoaderCircle } from 'lucide-react';
+import { Image as ImageIcon, Video, LoaderCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -11,22 +11,38 @@ type PromptFormProps = {
   setPrompt: (prompt: string) => void;
 };
 
-function SubmitButton() {
+function GenerateButtons() {
   const { pending } = useFormStatus();
+
   return (
-    <Button type="submit" disabled={pending} size="lg" className="w-full sm:w-auto">
-      {pending ? (
-        <>
-          <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
-          Generating...
-        </>
-      ) : (
-        <>
-          <Wand2 className="mr-2 h-4 w-4" />
-          Generate
-        </>
-      )}
-    </Button>
+    <div className="flex flex-col sm:flex-row gap-2">
+       <Button type="submit" name="action" value="image" disabled={pending} size="lg" className="w-full sm:w-auto hover:animate-jiggle active:animate-bubble">
+        {pending ? (
+          <>
+            <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+            Generating...
+          </>
+        ) : (
+          <>
+            <ImageIcon className="mr-2 h-4 w-4" />
+            Generate Image
+          </>
+        )}
+      </Button>
+      <Button type="submit" name="action" value="video" disabled={pending} size="lg" className="w-full sm:w-auto hover:animate-jiggle active:animate-bubble">
+        {pending ? (
+          <>
+            <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+            Generating...
+          </>
+        ) : (
+          <>
+            <Video className="mr-2 h-4 w-4" />
+            Generate Video
+          </>
+        )}
+      </Button>
+    </div>
   );
 }
 
@@ -51,7 +67,7 @@ export function PromptForm({ prompt, setPrompt }: PromptFormProps) {
           className="text-base"
         />
         <div className="flex justify-end">
-          <SubmitButton />
+          <GenerateButtons />
         </div>
       </CardContent>
     </Card>

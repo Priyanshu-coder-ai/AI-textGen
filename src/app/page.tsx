@@ -9,7 +9,7 @@ import { generateContentAction, type FormState } from './actions';
 import { useToast } from "@/hooks/use-toast";
 
 const initialState: FormState = {
-  data: null,
+  result: null,
   error: null,
   timestamp: Date.now(),
 };
@@ -44,7 +44,7 @@ export default function Home() {
           variant: "destructive",
         });
       }
-      if (state.data) {
+      if (state.result) {
         const currentPrompt = prompt.trim();
         // Add prompt to history if it's new
         if (currentPrompt && !history.includes(currentPrompt)) {
@@ -84,7 +84,7 @@ export default function Home() {
             
             <form action={formAction} className="flex flex-col gap-8">
               <PromptForm prompt={prompt} setPrompt={setPrompt} />
-              <ResultDisplay content={state.data} />
+              <ResultDisplay content={state.result} />
             </form>
           </div>
         </main>
