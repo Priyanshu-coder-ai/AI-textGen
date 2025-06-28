@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'VividAI',
+  title: 'Prompt2Text',
   description: 'Generate videos and images from text prompts.',
 };
 

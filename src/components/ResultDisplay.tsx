@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Film, ImageIcon, Download } from 'lucide-react';
+import { ImageIcon, Download } from 'lucide-react';
 import type { ContentResult } from '@/app/actions';
 
 type ResultDisplayProps = {
@@ -18,16 +18,14 @@ export function ResultDisplay({ content }: ResultDisplayProps) {
   const handleDownload = () => {
     if (!content?.dataUri) return;
 
-    // Fetching the data URI as a blob is a robust way to handle downloads,
-    // avoiding browser limitations on long data URIs.
     fetch(content.dataUri)
       .then(res => res.blob())
       .then(blob => {
           const url = window.URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.href = url;
-          const fileExtension = content.type === 'image' ? 'png' : 'mp4';
-          link.download = `vivid-ai-generated.${fileExtension}`;
+          const fileExtension = 'png';
+          link.download = `prompt2text-generated.${fileExtension}`;
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
@@ -35,11 +33,10 @@ export function ResultDisplay({ content }: ResultDisplayProps) {
       })
       .catch(e => {
         console.error("Download failed", e);
-        // Fallback for simple data URIs if fetch fails
         const link = document.createElement('a');
         link.href = content.dataUri;
-        const fileExtension = content.type === 'image' ? 'png' : 'mp4';
-        link.download = `vivid-ai-generated.${fileExtension}`;
+        const fileExtension = 'png';
+        link.download = `prompt2text-generated.${fileExtension}`;
         link.click();
       });
   };
@@ -48,7 +45,7 @@ export function ResultDisplay({ content }: ResultDisplayProps) {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Film />
+          <ImageIcon />
           Generated Output
         </CardTitle>
       </CardHeader>
@@ -63,16 +60,6 @@ export function ResultDisplay({ content }: ResultDisplayProps) {
               width={1920}
               height={1080}
               className="h-full w-full object-contain"
-            />
-          ) : content?.type === 'video' && content.dataUri ? (
-            <video
-              src={content.dataUri}
-              controls
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="h-full w-full object-contain bg-black"
             />
           ) : (
             <div className="flex flex-col items-center gap-2 text-muted-foreground p-4 text-center">

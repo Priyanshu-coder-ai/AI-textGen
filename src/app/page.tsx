@@ -12,6 +12,7 @@ const initialState: FormState = {
   result: null,
   error: null,
   timestamp: Date.now(),
+  improvedPrompt: null,
 };
 
 export default function Home() {
@@ -25,7 +26,7 @@ export default function Home() {
   // Load history from localStorage on initial render
   useEffect(() => {
     try {
-      const savedHistory = localStorage.getItem('vividai-history');
+      const savedHistory = localStorage.getItem('prompt2text-history');
       if (savedHistory) {
         setHistory(JSON.parse(savedHistory));
       }
@@ -39,7 +40,7 @@ export default function Home() {
     if (state.timestamp > lastHandledTimestamp) {
       if (state.error) {
         toast({
-          title: "Generation Failed",
+          title: "Action Failed",
           description: state.error,
           variant: "destructive",
         });
@@ -51,11 +52,18 @@ export default function Home() {
           const newHistory = [currentPrompt, ...history].slice(0, 20); // Keep last 20
           setHistory(newHistory);
           try {
-            localStorage.setItem('vividai-history', JSON.stringify(newHistory));
+            localStorage.setItem('prompt2text-history', JSON.stringify(newHistory));
           } catch (error) {
             console.error('Failed to save history to localStorage', error);
           }
         }
+      }
+      if (state.improvedPrompt) {
+        setPrompt(state.improvedPrompt);
+        toast({
+            title: "Prompt Improved",
+            description: "Your prompt has been enhanced.",
+        });
       }
       setLastHandledTimestamp(state.timestamp);
     }
@@ -75,10 +83,10 @@ export default function Home() {
           <div className="mx-auto w-full max-w-4xl flex flex-col gap-8">
             <header>
               <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl font-headline">
-                VividAI
+                Prompt2Text
               </h1>
               <p className="mt-2 text-lg text-muted-foreground max-w-2xl">
-                Bring your ideas to life. Describe a scene and watch our AI create a video or image from your words.
+                Bring your ideas to life. Describe a scene and watch our AI create an image from your words, or let us improve the prompt for you.
               </p>
             </header>
             

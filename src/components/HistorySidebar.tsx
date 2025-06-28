@@ -22,7 +22,7 @@ export function HistorySidebar({ history, onSelectPrompt }: HistorySidebarProps)
       <SidebarHeader>
         <div className="flex items-center gap-2">
           <Wand2 className="h-6 w-6 text-primary" />
-          <h2 className="text-xl font-semibold font-headline">VividAI</h2>
+          <h2 className="text-xl font-semibold font-headline">Prompt2Text</h2>
         </div>
       </SidebarHeader>
       <SidebarContent>

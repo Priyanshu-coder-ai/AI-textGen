@@ -1,7 +1,7 @@
 'use client';
 
 import { useFormStatus } from 'react-dom';
-import { Image as ImageIcon, Video, LoaderCircle } from 'lucide-react';
+import { Image as ImageIcon, Sparkles, LoaderCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -12,12 +12,13 @@ type PromptFormProps = {
 };
 
 function GenerateButtons() {
-  const { pending } = useFormStatus();
+  const { pending, data } = useFormStatus();
+  const action = data?.get('action');
 
   return (
     <div className="flex flex-col sm:flex-row gap-2">
        <Button type="submit" name="action" value="image" disabled={pending} size="lg" className="w-full sm:w-auto hover:animate-jiggle active:animate-bubble">
-        {pending ? (
+        {pending && action === 'image' ? (
           <>
             <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
             Generating...
@@ -29,16 +30,16 @@ function GenerateButtons() {
           </>
         )}
       </Button>
-      <Button type="submit" name="action" value="video" disabled={pending} size="lg" className="w-full sm:w-auto hover:animate-jiggle active:animate-bubble">
-        {pending ? (
+      <Button type="submit" name="action" value="improve" disabled={pending} size="lg" className="w-full sm:w-auto hover:animate-jiggle active:animate-bubble">
+        {pending && action === 'improve' ? (
           <>
             <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
-            Generating...
+            Improving...
           </>
         ) : (
           <>
-            <Video className="mr-2 h-4 w-4" />
-            Generate Video
+            <Sparkles className="mr-2 h-4 w-4" />
+            Improve Prompt
           </>
         )}
       </Button>
@@ -53,7 +54,7 @@ export function PromptForm({ prompt, setPrompt }: PromptFormProps) {
     <Card>
       <CardHeader>
         <CardTitle>Create your vision</CardTitle>
-        <CardDescription>Enter a prompt and let our AI bring your idea to life as a video or image.</CardDescription>
+        <CardDescription>Enter a prompt and let our AI bring your idea to life as an image, or improve your prompt.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <Textarea
